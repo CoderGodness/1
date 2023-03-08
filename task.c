@@ -19,7 +19,8 @@ int main(int argc, char** argv)
 
 	double* matrixOld = (double*)malloc(totalSize * sizeof(double));
 	double* matrixNew = (double*)malloc(totalSize * sizeof(double));
-
+	memset(matrixOld, 0, size * size * sizeof(double));
+	memset(matrixNew, 0, size * size * sizeof(double));
 	matrixOld[0] = cornerUL;
 	matrixOld[size - 1] = cornerUR;
 	matrixOld[totalSize - 1] = cornerBR;
