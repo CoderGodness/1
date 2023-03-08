@@ -67,7 +67,7 @@ int main(int argc, char** argv)
 	}
 	#pragma acc update host(errorNow)
 	#pragma acc exit data delete(matrixOld, matrixNew)
-	printf("iterations = %d, error = %d", errorNow, errorNow);
+	printf("iterations = %d, error = %lf", iterNow, errorNow);
 	free(matrixOld);
 	free(matrixNew);
 	return 0;
