@@ -27,7 +27,9 @@ int main(int argc, char** argv)
 
 
 	const double fraction = (cornerUR - cornerUL) / size;
-	#pragma acc enter data copyin(matrixOld[0:totalSize]) create(matrixNew[0:totalSize])
+	double errorNow = 1.0;
+	int iterNow = 0;
+	#pragma acc enter data copyin(matrixOld[0:totalSize], errorNow) create(matrixNew[0:totalSize])
 	#pragma acc parallel loop 
 	for (int i = 1; i < size - 1; i++)
 	{
@@ -42,8 +44,7 @@ int main(int argc, char** argv)
 		matrixNew[size * (size - 1) + i] = matrixOld[size * (size - 1) + i];
 	}
 
-	double errorNow = 1.0;
-	int iterNow = 0;
+	
 	while (errorNow > maxError && iterNow < maxIteration)
 	{
 		iterNow++;
