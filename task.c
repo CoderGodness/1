@@ -3,11 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-
 double* matrixOld=0;
 double* matrixNew=0;
 
-double matrixСalc(int size)
+double matrixCalc(int size)
 {
 	double error = 0.0;
 #pragma acc parallel loop independent collapse(2) vector vector_length(size) gang num_gangs(size) reduction(max:error) present(matrixOld[0:size*size], matrixNew[0:size*size])
@@ -73,7 +72,7 @@ int main(int argc, char** argv)
 	while (errorNow > maxError && iterNow < maxIteration)
 	{
 		iterNow++;
-		errorNow = matrixСalc(size);
+		errorNow = matrixCalc(size);
 		matrixSwap();
 	}
 #pragma acc update host(matrixOld[0:totalSize], matrixNew[0:totalSize])
