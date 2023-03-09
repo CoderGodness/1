@@ -53,12 +53,13 @@ int main(int argc, char** argv)
 					matrixOld[(i + 1) * size + j] + 
 					matrixOld[i * size + j + 1]) ;
 				errorLayer = fmax(errorLayer, matrixNew[i * size + j] - matrixOld[i * size + j]);
+				errorNow = errorLayer;
 			}
 		}
 		double* temp = matrixOld;
 		matrixOld = matrixNew;
 		matrixNew = temp;
-		errorNow = errorLayer;
+		//errorNow = errorLayer;
 	}
 #pragma acc update host(matrixOld[0:totalSize], matrixNew[0:totalSize])
 #pragma acc exit data delete(matrixOld[0:totalSize], matrixNew[0:totalSize])
