@@ -78,6 +78,8 @@ int main(int argc, char** argv)
 #pragma acc update host(matrixOld[0:totalSize], matrixNew[0:totalSize])
 #pragma acc exit data delete(matrixOld[0:totalSize], matrixNew[0:totalSize])
 	printf("iterations = %d, error = %lf", iterNow, errorNow);
+	if (argc>4)
+	{
 	printf("\n");
 	for (int i = 0; i < size; i++)
 	{
@@ -86,6 +88,7 @@ int main(int argc, char** argv)
 			printf("%lf\t", matrixNew[i * size + j]);
 		}
 		printf("\n");
+	}
 	}
 	return 0;
 }
