@@ -60,8 +60,8 @@ int main(int argc, char** argv)
 		matrixNew = temp;
 		errorNow = errorLayer;
 	}
-
-#pragma acc exit data delete(matrixOld, matrixNew)
+#pragma acc update host(matrixOld[0:totalSize], matrixNew[0:totalSize])
+#pragma acc exit data delete(matrixOld[0:totalSize], matrixNew[0:totalSize])
 	printf("iterations = %d, error = %lf", iterNow, errorNow);
 	printf("\n");
 	for (int i = 0; i < size; i++)
