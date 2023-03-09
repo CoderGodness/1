@@ -5,36 +5,36 @@
 #include <math.h>
 double* matrixOld;
 double* matrixNew;
+
 double matrixСalc(int size)
 {
-   double error = 0.0;
-
-    #pragma acc parallel loop independent collapse(2) vector vector_length(size) gang num_gangs(size) reduction(max:error) \
-        present(matrixOld[0:size*size], matrixNew[0:size*size])
-    for (size_t i = 1; i < size - 1; i++)
-    {
-        for (size_t j = 1; j < size - 1; j++)
-        {
-		matrixNew[i * size + j] = 0.25 * (
-			matrixOld[i * size + j - 1] + 
-			matrixOld[(i - 1) * size + j] + 
-			matrixOld[(i + 1) * size + j] + 
-			matrixOld[i * size + j + 1]) ;
-		error = fmax(error, matrixNew[i * size + j] - matrixOld[i * size + j]);
-        }
-    }
-  return error;
+	double error = 0.0;
+#pragma acc parallel loop independent collapse(2) vector vector_length(size) gang num_gangs(size) reduction(max:error) present(matrixOld[0:size*size], matrixNew[0:size*size])
+	for (size_t i = 1; i < size - 1; i++)
+	{
+		for (size_t j = 1; j < size - 1; j++)
+		{
+			matrixNew[i * size + j] = 0.25 * (
+				matrixOld[i * size + j - 1] +
+				matrixOld[(i - 1) * size + j] +
+				matrixOld[(i + 1) * size + j] +
+				matrixOld[i * size + j + 1]);
+			error = fmax(error, matrixNew[i * size + j] - matrixOld[i * size + j]);
+		}
+	}
+	return error;
 }
+
 void matrixSwap()
 {
-    #pragma acc present(matrixOld[0:size*size], matrixNew[0:size*size])
-    {
-    double* temp = matrixOld;
-    matrixOld = matrixNew;
-    matrixNew = temp;
-    }
+#pragma acc present(matrixOld[0:size*size], matrixNew[0:size*size])
+	{
+		double* temp = matrixOld;
+		matrixOld = matrixNew;
+		matrixNew = temp;
+	}
 }
-	
+
 int main(int argc, char** argv)
 {
 	int cornerUL = 10;
@@ -48,8 +48,8 @@ int main(int argc, char** argv)
 
 	int totalSize = size * size;
 
-	matrixOld = (double*)calloc(totalSize , sizeof(double));
-	matrixNew = (double*)calloc(totalSize , sizeof(double));
+	matrixOld = (double*)calloc(totalSize, sizeof(double));
+	matrixNew = (double*)calloc(totalSize, sizeof(double));
 
 	const double fraction = 10.0 / (size - 1);
 	double errorNow = 1.0;
