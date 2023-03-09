@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <time.h>
 double* matrixOld=0;
 double* matrixNew=0;
 
@@ -68,7 +69,7 @@ int main(int argc, char** argv)
 		matrixNew[size * i + size - 1] = matrixOld[size * i + size - 1];
 		matrixNew[size * (size - 1) + i] = matrixOld[size * (size - 1) + i];
 	}
-
+    clock_t algBegin = clock();
 	while (errorNow > maxError && iterNow < maxIteration)
 	{
 		iterNow++;
@@ -77,7 +78,8 @@ int main(int argc, char** argv)
 	}
 #pragma acc update host(matrixOld[0:totalSize], matrixNew[0:totalSize])
 #pragma acc exit data delete(matrixOld[0:totalSize], matrixNew[0:totalSize])
-	printf("iterations = %d, error = %lf", iterNow, errorNow);
+	  clock_t algEnd = clock();
+	printf("iterations = %d, error = %lf, time = ", iterNow, errorNow, 1.0 * (algEnd - algBegin) / CLOCKS_PER_SEC);
 	if (argc>4)
 	{
 	printf("\n");
