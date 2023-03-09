@@ -25,9 +25,9 @@ double matrixCalc(int size)
 	return error;
 }
 
-void matrixSwap()
+void matrixSwap(int totalSize)
 {
-#pragma acc data present(matrixOld[0:size*size], matrixNew[0:size*size])
+#pragma acc data present(matrixOld[0:totalSize], matrixNew[0:totalSize])
 	{
 		double* temp = matrixOld;
 		matrixOld = matrixNew;
