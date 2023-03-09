@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+double* matrixOld;
+double* matrixNew;
 double matrixСalc(int size)
 {
    double error = 0.0;
@@ -46,8 +48,8 @@ int main(int argc, char** argv)
 
 	int totalSize = size * size;
 
-	double* matrixOld = (double*)calloc(totalSize , sizeof(double));
-	double* matrixNew = (double*)calloc(totalSize , sizeof(double));
+	matrixOld = (double*)calloc(totalSize , sizeof(double));
+	matrixNew = (double*)calloc(totalSize , sizeof(double));
 
 	const double fraction = 10.0 / (size - 1);
 	double errorNow = 1.0;
