@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-double* matrixOld;
-double* matrixNew;
+
+double* matrixOld=0;
+double* matrixNew=0;
 
 double matrixСalc(int size)
 {
