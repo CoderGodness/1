@@ -79,7 +79,7 @@ int main(int argc, char** argv)
 #pragma acc update host(matrixOld[0:totalSize], matrixNew[0:totalSize])
 #pragma acc exit data delete(matrixOld[0:totalSize], matrixNew[0:totalSize])
 	  clock_t algEnd = clock();
-	printf("iterations = %d, error = %lf, time = &lf", iterNow, errorNow, 1.0 * (algEnd - algBegin) / CLOCKS_PER_SEC);
+	printf("iterations = %d, error = %lf, time = %lf", iterNow, errorNow, 1.0 * (algEnd - algBegin) / CLOCKS_PER_SEC);
 	if (argc>4)
 	{
 	printf("\n");
