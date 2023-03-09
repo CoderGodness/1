@@ -73,7 +73,7 @@ int main(int argc, char** argv)
 	{
 		iterNow++;
 		errorNow = matrixCalc(size);
-		matrixSwap();
+		matrixSwap(totalSize);
 	}
 #pragma acc update host(matrixOld[0:totalSize], matrixNew[0:totalSize])
 #pragma acc exit data delete(matrixOld[0:totalSize], matrixNew[0:totalSize])
