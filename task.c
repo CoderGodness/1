@@ -10,7 +10,7 @@ double* matrixNew=0;
 double matrixCalc(int size)
 {
 	//double error = 0.0;
-#pragma acc parallel loop independent collapse(2) vector vector_length(size) gang num_gangs(size) reduction(max:error) present(matrixOld[0:size*size], matrixNew[0:size*size])
+#pragma acc parallel loop independent collapse(2) vector vector_length(size) gang num_gangs(size) reduction(max:error) present(matrixOld[0:size*size], matrixNew[0:size*size], errorNow)
 	for (size_t i = 1; i < size - 1; i++)
 	{
 		for (size_t j = 1; j < size - 1; j++)
@@ -20,7 +20,7 @@ double matrixCalc(int size)
 				matrixOld[(i - 1) * size + j] +
 				matrixOld[(i + 1) * size + j] +
 				matrixOld[i * size + j + 1]);
-			error = fmax(error, matrixNew[i * size + j] - matrixOld[i * size + j]);
+			errorNow = fmax(errorNow, matrixNew[i * size + j] - matrixOld[i * size + j]);
 		}
 	}
 	return error;
@@ -55,7 +55,7 @@ int main(int argc, char** argv)
 	const double fraction = 10.0 / (size - 1);
 	double errorNow = 1.0;
 	int iterNow = 0;
-#pragma acc enter data create(matrixOld[0:totalSize], matrixNew[0:totalSize])
+#pragma acc enter data create(matrixOld[0:totalSize], matrixNew[0:totalSize], errorNow)
 #pragma acc parallel loop 
 	for (int i = 0; i < size; i++)
 	{
