@@ -78,6 +78,6 @@ int main(int argc, char** argv)
 
 #pragma acc exit data delete(matrixOld[0:totalSize], matrixNew[0:totalSize])
 	
-	printf("iterations = %d, error = %lf, iterNow, errorNow);
+	printf("iterations = %d, error = %lf", iterNow, errorNow);
 	return 0;
 }
