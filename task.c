@@ -9,7 +9,7 @@ double* matrixNew=0;
 
 double matrixCalc(int size)
 {
-	double error = 0.0;
+	//double error = 0.0;
 #pragma acc parallel loop independent collapse(2) vector vector_length(size) gang num_gangs(size) reduction(max:error) present(matrixOld[0:size*size], matrixNew[0:size*size])
 	for (size_t i = 1; i < size - 1; i++)
 	{
