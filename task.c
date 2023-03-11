@@ -4,9 +4,10 @@
 #include <string.h>
 #include <math.h>
 #include <time.h>
+double* matrixOld=0;
+double* matrixNew=0;
 
-
-double matrixCalc(int size, double* matrixOld, double* matrixNew)
+double matrixCalc(int size)
 {
 	double error = 0.0;
 #pragma acc parallel loop independent collapse(2) vector vector_length(size) gang num_gangs(size) reduction(max:error) present(matrixOld[0:size*size], matrixNew[0:size*size])
@@ -25,7 +26,7 @@ double matrixCalc(int size, double* matrixOld, double* matrixNew)
 	return error;
 }
 
-void matrixSwap(int totalSize, double* matrixOld, double* matrixNew)
+void matrixSwap(int totalSize)
 {
 #pragma acc data present(matrixOld[0:totalSize], matrixNew[0:totalSize])
 	{
@@ -48,8 +49,8 @@ int main(int argc, char** argv)
 
 	int totalSize = size * size;
 
-	double* matrixOld = (double*)calloc(totalSize, sizeof(double));
-	double* matrixNew = (double*)calloc(totalSize, sizeof(double));
+	matrixOld = (double*)calloc(totalSize, sizeof(double));
+	matrixNew = (double*)calloc(totalSize, sizeof(double));
 
 	const double fraction = 10.0 / (size - 1);
 	double errorNow = 1.0;
@@ -72,8 +73,8 @@ int main(int argc, char** argv)
 	while (errorNow > maxError && iterNow < maxIteration)
 	{
 		iterNow++;
-		errorNow = matrixCalc(size, matrixOld, matrixNew);
-		matrixSwap(totalSize, matrixOld, matrixNew);
+		errorNow = matrixCalc(size);
+		matrixSwap(totalSize);
 	}
 #pragma acc update host(matrixOld[0:totalSize], matrixNew[0:totalSize])
 #pragma acc exit data delete(matrixOld[0:totalSize], matrixNew[0:totalSize])
