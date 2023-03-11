@@ -38,6 +38,7 @@ void matrixSwap(int totalSize)
 
 int main(int argc, char** argv)
 {
+	clock_t algBegin = clock();
 	int cornerUL = 10;
 	int cornerUR = 20;
 	int cornerBR = 30;
@@ -69,7 +70,6 @@ int main(int argc, char** argv)
 		matrixNew[size * i + size - 1] = matrixOld[size * i + size - 1];
 		matrixNew[size * (size - 1) + i] = matrixOld[size * (size - 1) + i];
 	}
-    clock_t algBegin = clock();
 	while (errorNow > maxError && iterNow < maxIteration)
 	{
 		iterNow++;
