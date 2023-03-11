@@ -6,10 +6,9 @@
 #include <time.h>
 double* matrixOld=0;
 double* matrixNew=0;
-
+double errorNow;
 double matrixCalc(int size)
 {
-	//double error = 0.0;
 #pragma acc parallel loop independent collapse(2) vector vector_length(size) gang num_gangs(size) reduction(max:error) present(matrixOld[0:size*size], matrixNew[0:size*size], errorNow)
 	for (size_t i = 1; i < size - 1; i++)
 	{
@@ -53,7 +52,7 @@ int main(int argc, char** argv)
 	matrixNew = (double*)calloc(totalSize, sizeof(double));
 
 	const double fraction = 10.0 / (size - 1);
-	double errorNow = 1.0;
+	errorNow = 1.0;
 	int iterNow = 0;
 #pragma acc enter data create(matrixOld[0:totalSize], matrixNew[0:totalSize]) copyin(errorNow)
 #pragma acc parallel loop 
