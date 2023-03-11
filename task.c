@@ -55,7 +55,7 @@ int main(int argc, char** argv)
 	const double fraction = 10.0 / (size - 1);
 	double errorNow = 1.0;
 	int iterNow = 0;
-#pragma acc enter data create(matrixOld[0:totalSize], matrixNew[0:totalSize], errorNow)
+#pragma acc enter data create(matrixOld[0:totalSize], matrixNew[0:totalSize]) copyin(errorNow)
 #pragma acc parallel loop 
 	for (int i = 0; i < size; i++)
 	{
