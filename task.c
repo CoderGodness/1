@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <time.h>
+
 double* matrixOld=0;
 double* matrixNew=0;
 
@@ -38,7 +38,6 @@ void matrixSwap(int totalSize)
 
 int main(int argc, char** argv)
 {
-	clock_t algBegin = clock();
 	int cornerUL = 10;
 	int cornerUR = 20;
 	int cornerBR = 30;
@@ -76,21 +75,9 @@ int main(int argc, char** argv)
 		errorNow = matrixCalc(size);
 		matrixSwap(totalSize);
 	}
-#pragma acc update host(matrixOld[0:totalSize], matrixNew[0:totalSize])
+
 #pragma acc exit data delete(matrixOld[0:totalSize], matrixNew[0:totalSize])
-	  clock_t algEnd = clock();
-	printf("iterations = %d, error = %lf, time = %lf\n", iterNow, errorNow, 1.0 * (algEnd - algBegin) / CLOCKS_PER_SEC);
-	if (argc>4)
-	{
-	printf("\n");
-	for (int i = 0; i < size; i++)
-	{
-		for (int j = 0; j < size; j++)
-		{
-			printf("%lf\t", matrixNew[i * size + j]);
-		}
-		printf("\n");
-	}
-	}
+	
+	printf("iterations = %d, error = %lf, iterNow, errorNow);
 	return 0;
 }
