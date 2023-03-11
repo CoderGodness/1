@@ -23,7 +23,7 @@ double matrixCalc(int size)
 			errorNow = fmax(errorNow, matrixNew[i * size + j] - matrixOld[i * size + j]);
 		}
 	}
-	return error;
+	return errorNow;
 }
 
 void matrixSwap(int totalSize)
