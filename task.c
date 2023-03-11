@@ -25,7 +25,7 @@ double matrixCalc(int size, double* matrixOld, double* matrixNew)
 	return error;
 }
 
-void matrixSwap(int totalSize)
+void matrixSwap(int totalSize, double* matrixOld, double* matrixNew)
 {
 #pragma acc data present(matrixOld[0:totalSize], matrixNew[0:totalSize])
 	{
@@ -73,7 +73,7 @@ int main(int argc, char** argv)
 	{
 		iterNow++;
 		errorNow = matrixCalc(size, matrixOld, matrixNew);
-		matrixSwap(totalSize);
+		matrixSwap(totalSize, matrixOld, matrixNew);
 	}
 #pragma acc update host(matrixOld[0:totalSize], matrixNew[0:totalSize])
 #pragma acc exit data delete(matrixOld[0:totalSize], matrixNew[0:totalSize])
