@@ -69,13 +69,28 @@ int main(int argc, char** argv)
 		matrixNew[size * i + size - 1] = matrixOld[size * i + size - 1];
 		matrixNew[size * (size - 1) + i] = matrixOld[size * (size - 1) + i];
 	}
+    clock_t algBegin = clock();
 	while (errorNow > maxError && iterNow < maxIteration)
 	{
 		iterNow++;
 		errorNow = matrixCalc(size);
 		matrixSwap(totalSize);
 	}
+#pragma acc update host(matrixOld[0:totalSize], matrixNew[0:totalSize])
 #pragma acc exit data delete(matrixOld[0:totalSize], matrixNew[0:totalSize])
-	printf("iterations = %d, error = %lf, time = %lf\n", iterNow, errorNow);
+	  clock_t algEnd = clock();
+	printf("iterations = %d, error = %lf, time = %lf\n", iterNow, errorNow, 1.0 * (algEnd - algBegin) / CLOCKS_PER_SEC);
+	if (argc>4)
+	{
+	printf("\n");
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+		{
+			printf("%lf\t", matrixNew[i * size + j]);
+		}
+		printf("\n");
+	}
+	}
 	return 0;
 }
