@@ -95,7 +95,7 @@ int main(int argc, char** argv)
 			{
 				printf("%lf\t", matrixNew[i * size + j]);
 			}
-			printf("\n");
+			printf("\n ");
 		}
 	}
 	return 0;
