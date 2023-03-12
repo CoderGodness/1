@@ -58,7 +58,7 @@ int main(int argc, char** argv)
 	double errorNow = 1.0;
 	int iterNow = 0;
 	clock_t begin = clock();	
-#pragma acc enter data copyin(matrixOld[0:totalSize], matrixNew[0:totalSize]) copyin(errorNow)
+#pragma acc enter data create(matrixOld[0:totalSize], matrixNew[0:totalSize]) copyin(errorNow)
 #pragma acc parallel loop
 	for (int i = 0; i < size; i++)
 	{
