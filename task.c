@@ -83,7 +83,8 @@ int main(int argc, char** argv)
 #pragma acc exit data delete(matrixOld[0:totalSize], matrixNew[0:totalSize])
 
 	clock_t end = clock();	
-	
+	free(matrixOld);
+   	free(matrixNew);
 	printf("iterations = %d, error = %lf, time = %lf\n", iterNow, errorNow, (double)(end - begin) / CLOCKS_PER_SEC);
 		
 	return 0;
