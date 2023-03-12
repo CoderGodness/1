@@ -51,8 +51,6 @@ int main(int argc, char** argv)
 
 	int totalSize = size * size;
 	
-	matrixOld = (double*)calloc(totalSize , sizeof(double));
-	matrixNew = (double*)calloc(totalSize , sizeof(double));
 
 	const double fraction = 10.0 / (size - 1);
 	double errorNow = 1.0;
@@ -85,17 +83,6 @@ int main(int argc, char** argv)
 	clock_t end = clock();	
 	
 	printf("iterations = %d, error = %lf, time = %lf\n", iterNow, errorNow, (double)(end - begin) / CLOCKS_PER_SEC);
-	
-	if (argc>4)
-	{
-		for (int i = 0; i < size; i++)
-		{
-			for (int j = 0; j < size; j++)
-			{
-				printf("%lf\t", matrixNew[i * size + j]);
-			}
-			printf("\n ");
-		}
-	}
+		
 	return 0;
 }
