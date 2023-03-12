@@ -31,8 +31,9 @@ void matrixSwap(int totalSize)
 {
 #pragma acc data present(matrixOld[0:totalSize], matrixNew[0:totalSize])
 	{
-		  acc_attach((void**)matrixOld);
-        	  acc_attach((void**)matrixNew);
+		double* temp = matrixOld;
+		matrixOld = matrixNew;
+		matrixNew = temp;
 	}
 }
 
