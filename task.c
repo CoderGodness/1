@@ -50,6 +50,9 @@ int main(int argc, char** argv)
 	const int maxIteration = atoi(argv[3]);
 
 	int totalSize = size * size;
+	double* matrixOld = (double*)calloc(totalSize , sizeof(double));
+	double* matrixNew = (double*)calloc(totalSize , sizeof(double));
+
 
 	const double fraction = 10.0 / (size - 1);
 	double errorNow = 1.0;
