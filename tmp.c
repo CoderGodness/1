@@ -11,6 +11,7 @@ double* matrixNew=0;
 double matrixCalc(int size)
 {
 	double errorNow = 0.0;
+	#pragma acc parallel loop independent collapse(2) vector vector_length(size) gang num_gangs(size) reduction(max:errorNow) 
 	for (int i = 1; i < size - 1; i++)
 	{
 		for (int j = 1; j < size - 1; j++)
@@ -55,7 +56,7 @@ int main(int argc, char** argv)
 	int iterNow = 0;
     
 	clock_t begin = clock();	
-
+#pragma acc parallel loop
 	for (int i = 0; i < size; i++)
 	{
 			matrixOld[i] = cornerUL + i * fraction;
