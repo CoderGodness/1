@@ -34,8 +34,6 @@ void matrixSwap(int totalSize)
 		double* temp = matrixOld;
 		matrixOld = matrixNew;
 		matrixNew = temp;
-	acc_attach((void**)matrixOld);
-        acc_attach((void**)matrixNew);
 	}
 }
 
